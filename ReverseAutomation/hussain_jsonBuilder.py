@@ -29,7 +29,8 @@ def map_constraint_type(input_type):
 def map_nullable(input_nullable):
     return input_nullable.lower() == 'yes'
 
-conn = psycopg2.connect(host="localhost", database="spriced_meritor", user="postgres", password="mysecretpassword")
+conn = psycopg2.connect(host="172.28.234.94", database="spriced_meritor", user="postgres", password="mysecretpassword")
+# conn = psycopg2.connect(host="localhost", database="spriced_meritor", user="postgres", password="mysecretpassword")
 cur = conn.cursor()
 
 # Read the sequence of JSON file creation
@@ -54,7 +55,7 @@ process_table = False
 # Define API call function
 def call_api_for_json(json_file_name):
     headers = {
-        'Authorization': 'Bearer ',
+        'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJDYTZ5YnhvRWhLZ09haHE2U1lWWWxPdFJhSWdRaVYxSFplcmFwOWxBcHNFIn0.eyJleHAiOjE3MTgxODMwNjgsImlhdCI6MTcxODA5Nzc4NywiYXV0aF90aW1lIjoxNzE4MDk2NjY4LCJqdGkiOiI1OGE1ZDc1NC0wOTBhLTRiMzItYjRjNS0wNjVhYzA0NzJiZGMiLCJpc3MiOiJodHRwczovL2F1dGguZGV2LnNpbWFkdmlzb3J5LmNvbS9hdXRoL3JlYWxtcy9EX1NQUklDRUQiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMDE0ZjI2YzMtMTA2NS00ZGUwLTgxMzMtN2ZmZGJjZWYxZWMyIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiRF9TUFJJQ0VEX0NsaWVudCIsIm5vbmNlIjoiNGVkMWVmN2QtMGRiYS00MDU1LTg3YzktOTYwYzIwNWVmOTQyIiwic2Vzc2lvbl9zdGF0ZSI6IjVlNWU5NDdjLWQ1MDktNDBhYy04MGY0LTRkNTc0ZmFiMTExZSIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cDovL2xvY2FsaG9zdDo0MjA0IiwiaHR0cHM6Ly9zcHJpY2VkLmRldi5zaW1hZHZpc29yeS5jb20iLCJodHRwOi8vbG9jYWxob3N0OjQyMDIiLCJodHRwOi8vbG9jYWxob3N0OjQyMDEiLCIqIiwiaHR0cHM6Ly9zcHJpY2VkLm1lcml0b3IudWF0LnNpbWFkdmlzb3J5LmNvbSIsImh0dHBzOi8vd3d3LnNpbWFkdmlzb3J5LmNvbTo0MjAwIiwiaHR0cDovL2xvY2FsaG9zdDo0MjAwIiwiaHR0cHM6Ly9zcHJpY2VkLnRlc3Quc2ltYWR2aXNvcnkuY29tIiwiaHR0cHM6Ly9leGNlbHBsdWdpbi5yb3V0ZS5tZXJpdG9yLnVhdC5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL3BkbS5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9zcHJpY2VkLm1lcml0b3IucHJlLXVhdC5zaW1hZHZpc29yeS5jb20iLCJodHRwczovLzQ2MzMtMTIyLTE2NS0xNjktMjM1Lm5ncm9rLWZyZWUuYXBwIiwiaHR0cHM6Ly9zcHJpY2VkLmRldi5tZXJpdG9yLnNpbWFkdmlzb3J5LmNvbSIsImh0dHBzOi8vcmVwb3J0cy5zcHJpY2VkLmRldi5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL3NwcmljZWQubWVyaXRvci5zcm8tdGVzdGluZy5zaW1hZHZpc29yeS5jb20iXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtZF9zcHJpY2VkIiwiQWRtaW4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCByb2xlcyBwcm9maWxlIGVtYWlsIiwic2lkIjoiNWU1ZTk0N2MtZDUwOS00MGFjLTgwZjQtNGQ1NzRmYWIxMTFlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTW9oZCBIdXNzYWluIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiaHVzc2FpbiIsImdpdmVuX25hbWUiOiJNb2hkIiwiZmFtaWx5X25hbWUiOiJIdXNzYWluIiwidGVuYW50IjoibWVyaXRvciIsImVtYWlsIjoibW9oZC5odXNhaW5Ac2ltYWR2aXNvcnlwYXJ0bmVyLmNvbSJ9.jHEOpoLmMSCeNiu7698Nts4Nri4iMctED98HQ2vusv8-KEGnw0B8yf-Cw-S3ot0xqQbxAFW3umexGMV94id6jk-IPicTOfMrz-y52cey44mEp5C5ouK-aJBiiE_i7CuyUBJUYIJIECAUIfnB2ymPg5_aoNwqvne_tKhfTmvGZvhwEa8I2fDirYB7Rv5ZSh8Wa_R9zTnyZ1KbodlTRnPtES_GJom3eQdpA7PpHl_2miFZPbtY04I1k6tOYcxwLryYtQLYInq49p3IYG_qGkgWX5IJbybocmqY43xssjvVkTc9JCq3mM7QBDpYPh054Flrkcggl7tBYLoE8JvY1J-_wg',
         'Content-Type': 'application/json',
         # 'tenant': 'meritor',
         # 'user': 'anand.kumar@simadvisory.com',
@@ -65,6 +66,7 @@ def call_api_for_json(json_file_name):
     
     api_url = 'http://localhost:9001/api/v1/definition/entities'
     # api_url = 'https://spriced.dev.meritor.simadvisory.com/api/v1/definition/entities'
+    # api_url = 'https://spriced.meritor.uat.simadvisory.com/api/v1/definition/entities'
     json_file_path = f"generated_jsons\\{json_file_name}"
     # json_file_path = f"D:\\codeBase\\Data_Ingestion_Project\\generated_jsons\\{json_file_name}"  # Assuming the JSON files are in the same directory
     with open(json_file_path, 'r') as f:

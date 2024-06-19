@@ -1,0 +1,40 @@
+-- View: public.mv_prm_tmpry_current
+
+-- DROP MATERIALIZED VIEW IF EXISTS public.mv_prm_tmpry_current;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS public.mv_prm_tmpry_current
+TABLESPACE pg_default
+AS
+ SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Temporary'::text AS method,
+    p.pstart AS start,
+    p.pstop AS "end"
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstart < CURRENT_DATE AND p.pstop > CURRENT_DATE AND eprm.prmbeg < CURRENT_DATE AND eprm.prmend > CURRENT_DATE AND tc.trkcd_cat::text = 'Temporary'::text AND eprm.prmlev IS NOT NULL
+WITH DATA;
+
+ALTER TABLE IF EXISTS public.mv_prm_tmpry_current
+    OWNER TO postgres;

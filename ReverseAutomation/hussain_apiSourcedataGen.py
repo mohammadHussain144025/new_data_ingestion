@@ -51,6 +51,10 @@ def write_to_csv(data, filename):
                 data_type = format_data_type(attribute["dataType"])
                 size = attribute.get("size", None)
                 pos = attribute.get("numberOfDecimalValues", None)
+                # Ensure pos is same as size for decimal data type
+                if data_type == "decimal":
+                    pos = attribute.get("size", None)
+                    size = 63
                 is_nullable = "no" if not attribute["nullable"] else "yes"
                 is_ref_column = "TRUE" if attribute["type"] == "LOOKUP" else "FALSE"
                 primary_key = ""
@@ -93,7 +97,7 @@ def write_to_csv(data, filename):
 
 def main():
     api_endpoint = "https://spriced.meritor.uat.simadvisory.com/api/v1/definition/models/1/entities"
-    bearer_token = ""  # Replace with your actual bearer token
+    bearer_token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJacjNwNm9Od25oQ2xkLV9qSDJ0dWZGanBWcUhoV1ZWQlVjS0xPOG5aMVFNIn0.eyJleHAiOjE3MTg4MTMxODgsImlhdCI6MTcxODc4NDM4OSwiYXV0aF90aW1lIjoxNzE4Nzg0MzYyLCJqdGkiOiIzZmM1YmNhNC0wN2Y3LTRkYjItYjYwNC0yODM0Yjc1ZmRlNTEiLCJpc3MiOiJodHRwczovL2F1dGguc2ltYWR2aXNvcnkuY29tL2F1dGgvcmVhbG1zL1NQUklDRURfTlJQIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjkxZjA4Nzc1LTZiMGUtNGEzMC1iYWRlLWRmN2NhOTRjMTVjMiIsInR5cCI6IkJlYXJlciIsImF6cCI6IlNQUklDRURfTlJQX0NMSUVOVCIsIm5vbmNlIjoiN2M5MzZlMmYtY2Y0OS00YjU2LTgwNTItYWJkNjcwZDEyODgxIiwic2Vzc2lvbl9zdGF0ZSI6ImZlM2JhOTVkLWYyMzEtNDc5Yi1hZDZhLWU2YWQ0NWUzMmE0NCIsImFjciI6IjAiLCJhbGxvd2VkLW9yaWdpbnMiOlsiaHR0cHM6Ly9ucnAuc3RnLnNpbWFkdmlzb3J5LmNvbSIsImh0dHBzOi8vbG9jYWxob3N0OjQyMDAiLCJodHRwczovL2xvY2FsaG9zdDozMDAwIiwiaHR0cHM6Ly9zcHJpY2VkLm1lcml0b3IucHJlLXVhdC5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL25ycC51YXQuc2ltYWR2aXNvcnkuY29tIiwiKiIsImh0dHBzOi8vc3ByaWNlZC5tZXJpdG9yLnVhdC5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL2Flcm8ucGF0LnNpbWFkdmlzb3J5LmNvbSIsImh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCIsImh0dHBzOi8vZXhjZWxwbHVnaW4uc3ByaWNlZC5tZXJpdG9yLnVhdC5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL3NwcmljZWQubWVyaXRvci5zcm8tdGVzdGluZy5zaW1hZHZpc29yeS5jb20iLCJodHRwczovL2V4Y2VscGx1Z2luLnJvdXRlLm1lcml0b3IudWF0LnNpbWFkdmlzb3J5LmNvbSJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZ19NZXJpdG9yX0NvcmVfTWFuYWdlciIsIkFkbWluIiwiZGVmYXVsdC1yb2xlcy1zcHJpY2VkX25ycCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJmZTNiYTk1ZC1mMjMxLTQ3OWItYWQ2YS1lNmFkNDVlMzJhNDQiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJUZXN0IFVzZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ0dTk5MSIsImdpdmVuX25hbWUiOiJUZXN0IiwiZmFtaWx5X25hbWUiOiJVc2VyIiwidGVuYW50IjoibWVyaXRvciIsImVtYWlsIjoidHU5OTFAc2ltYWR2aXNvcnkuY29tIn0.fhqxvcOi9Smxn9CAxvu6Pcl4wJCIWoMJiDFcOdrTMDqO1I6vjWjr8LtiGGHW8h6KbbC7zxXD00sOHXPvU4zdMMP5PrM9MwNw073nP2ui49OPTQ91K7paPHQ_YK8_sukl8xmBnfUvm4up3k7pxGHZKDesRgQFgyTPQFxNwJMWlfRlK4OaNx09uk8bT5rzlPuujJkIHSz5nP38gUkZ8Ggloy7s1n7UB9xRsJPNOUfGMQnXlhv5ZqXNfvY0iHuP4zx1bYcgyfgk_KWIobjy6-lMAVauqkAbteKQDHyXKk3s5JxHmzYAfWXO_bi9sCkY3olnT6UCyC3H16lG14j3LSDnAQ"  # Replace with your actual bearer token
     data = fetch_data_from_api(api_endpoint, bearer_token)
     if data:
         write_to_csv(data, "sourceDataGen.csv")

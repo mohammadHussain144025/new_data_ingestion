@@ -1,0 +1,310 @@
+entity_name,columns,display_name,linked_to
+p_pricing_action_detail,patype,Price Action Type,x_pricing_action_type
+p_pricing_action_detail,prcregcd,Pricing Action Region,p_pricing_region
+p_pricing_action_detail,attr,Attribute Changes,x_yes_no_flag
+sro_rules,pl,Private Label,x_yes_no_flag
+sro_rules,srocat,SRO Category Name,sro_attributes
+sro_rules,srogrp,SRO Group Name,x_sro_group_name
+prcdsc_additions,paname,Pricing Action Name,p_pricing_action_detail
+prcdsc_additions,prcapp,Pricing Manager Approval,x_approval_status
+prcdsc_additions,valid,Validation,x_validation
+prcdsc_additions,prcregcd,Region Code,p_pricing_region
+part,dwatt_1,DW - 1 Digit,x_dw_1_digit
+part,dwatt_3,DW - 3 Digit,x_dw_3_digit
+promos_additions,edapp,Executive Director Approval,x_approval_status
+promos_additions,peffdt,Pricing Action,p_pricing_action_detail
+promos_additions,paapp,Pricing Analyst Approval,x_approval_status
+promos_additions,pdap,Pricing Director Approval,x_approval_status
+promos_additions,pdl1vapp,Product Director LV1 Approval,x_approval_status
+promos_additions,pdl2vapp,Product Director LV2 Approval,x_approval_status
+promos_additions,pmleadap,Product Manager Leader Approval,x_approval_status
+promos_additions,prfds,Region Code,p_pricing_region
+promos_additions,valid,Validation,x_validation
+promos_additions,prcmapp,Pricing Manager Approval,x_approval_status
+promos_additions,pmapp,Product Manager Approval,x_approval_status
+local_pricing,prodcd3,Product Code - 3 Digit,x_product_code_3_digit
+local_pricing,prodcd1,Product Code - 1 Digit,x_product_code_1_digit
+local_pricing,regcd,Region Code,p_pricing_region
+local_pricing,sysflag,Review Flag - System,x_yes_no_flag
+local_pricing,userflag,Review Flag - User,x_yes_no_flag
+local_pricing,pamethod,Pricing Action,p_pricing_action_detail
+local_pricing,seg,Segment,x_segment_type
+local_pricing,regpric,Regional Pricing Flag,x_yes_no_flag
+local_pricing,curprcm,Current Pricing Method,x_pricing_method
+local_pricing,prcmeth,Future Pricing Method,x_pricing_method
+local_pricing,paowner,Pricing Action Owner,p_pricing_region
+local_pricing,paapp,Pricing Analyst Approval,x_approval_status
+local_pricing,pmapp,Product Manager Approval,x_approval_status
+local_pricing,pmlapp,Product Manager Lead Approval,x_approval_status
+local_pricing,prcmapp,Pricing Manager Approval,x_approval_status
+local_pricing,pdapp,Pricing Director Approval,x_approval_status
+local_pricing,pmdl1app,Product Manager Director LVL1 Approval,x_approval_status
+local_pricing,pmdl2app,Product Manager Director LVL2 Approval,x_approval_status
+local_pricing,edapp,Executive Director Approval,x_approval_status
+local_pricing,ninter,New Internal or External,x_interplant
+local_pricing,ndomes,New International or Domestic,x_yes_no_flag
+local_pricing,nkit,New KIT Flag,x_yes_no_flag
+list_price,segment,Segment Type,x_segment_type
+list_price,rsegflag,Ready For Segmentation Flag,x_yes_no_flag
+list_price,pmethod,Pricing Method,x_pricing_method
+list_price,international,International,x_yes_no_flag
+list_price,interorev,Interplant or External Vendor,x_interplant
+list_price,kitflag,KIT Flag,x_yes_no_flag
+list_price,paapp,Pricing Analyst Approval,x_approval_status
+list_price,pdl1vapp,Product Director LV1 Approval,x_approval_status
+list_price,pdl2vapp,Product Director LV2 Approval,x_approval_status
+list_price,pmleadap,Product Manager Leader Approval,x_approval_status
+list_price,pmapp,Pricing Manager Approval,x_approval_status
+list_price,pmaapp,Prcng Manager Approval,x_approval_status
+list_price,edapp,Executive Director Approval,x_approval_status
+list_price,pdapp,Pricing Director Approval,x_approval_status
+list_price,rejection_reason,Rejection Reason,x_rejection_reason
+fcp_sp,regcd,Region Code,p_pricing_region
+tcc_recc,user,User Recommendations,x_recc
+tcc_recc,regcode,Region Code,p_pricing_region
+tcc_recc,rec,Recommendations,x_recc
+supplier,inter,Internal or EV,x_interplant
+supplier,dom,Intl,x_yes_no_flag
+sro_attributes,app,Application,x_yes_no_flag
+sro_attributes,axleapp,Axle Application,x_yes_no_flag
+sro_attributes,axlemod,Axle Model,x_yes_no_flag
+sro_attributes,axleser,Axle Series,x_yes_no_flag
+sro_attributes,bpw,Backing Plate Width,x_yes_no_flag
+sro_attributes,beardm,Bearing Diameter,x_yes_no_flag
+sro_attributes,bodydm,Body Diameter,x_yes_no_flag
+sro_attributes,bcd,Bolt Circle Diameter,x_yes_no_flag
+sro_attributes,bhd,Bolt Hole Diameter,x_yes_no_flag
+sro_attributes,bore,Bore,x_yes_no_flag
+sro_attributes,brakesz,Brake Size,x_yes_no_flag
+sro_attributes,brtype,Brake Type,x_yes_no_flag
+sro_attributes,brand,Brand,x_yes_no_flag
+sro_attributes,bushtype,Bushing Type,x_yes_no_flag
+sro_attributes,cssc,Camshaft Spline Count,x_yes_no_flag
+sro_attributes,ctype,Cartridge Type,x_yes_no_flag
+sro_attributes,cte,Center to End,x_yes_no_flag
+sro_attributes,ctelen,Center to End Length,x_yes_no_flag
+sro_attributes,chmbrty,Chamber Type,x_yes_no_flag
+sro_attributes,class,Class,x_yes_no_flag
+sro_attributes,clutch,Clutch Size,x_yes_no_flag
+sro_attributes,collst,Collar Style,x_yes_no_flag
+sro_attributes,colllen,Collasped Length,x_yes_no_flag
+sro_attributes,compty,Component Type,x_yes_no_flag
+sro_attributes,conntype,Connector Type,x_yes_no_flag
+sro_attributes,convst,Convoluted Style,x_yes_no_flag
+sro_attributes,crosslen,Cross Length,x_yes_no_flag
+sro_attributes,efflen,Effective Length,x_yes_no_flag
+sro_attributes,exlen,Extended Length,x_yes_no_flag
+sro_attributes,flngdm,Flange Diameter,x_yes_no_flag
+sro_attributes,fmsi,FMSI,x_yes_no_flag
+sro_attributes,frictmix,Friction Mix,x_yes_no_flag
+sro_attributes,gawr,GAWR,x_yes_no_flag
+sro_attributes,genafter,Geniune/ Aftermaket,x_yes_no_flag
+sro_attributes,grade,Grade,x_yes_no_flag
+sro_attributes,headsty,Head Style,x_yes_no_flag
+sro_attributes,headty,Head Type,x_yes_no_flag
+sro_attributes,hubsty,Hub Style,x_yes_no_flag
+sro_attributes,hubtype,Hub Type,x_yes_no_flag
+sro_attributes,hubcaps,Hubcaps,x_yes_no_flag
+sro_attributes,indnum,Industry Number,x_yes_no_flag
+sro_attributes,isdm,Input Shaft Diameter,x_yes_no_flag
+sro_attributes,indm,Inside Diameter,x_yes_no_flag
+sro_attributes,kpdm,Kin Pin Diameter,x_yes_no_flag
+sro_attributes,kplen,King Pin Length,x_yes_no_flag
+sro_attributes,kptype,King Pin Type,x_yes_no_flag
+sro_attributes,ltapdm,Large Taper Diameter,x_yes_no_flag
+sro_attributes,lorr,Left or Right,x_yes_no_flag
+sro_attributes,len,Length,x_yes_no_flag
+sro_attributes,lrank,Lining Rank,x_yes_no_flag
+sro_attributes,loorunlo,LOADED OR UNLOADED,x_yes_no_flag
+sro_attributes,model,Model,x_yes_no_flag
+sro_attributes,norrem,New (Service Exch) or Reman,x_yes_no_flag
+sro_attributes,noaxles,Number of Axles,x_yes_no_flag
+sro_attributes,nospline,Number of Splines,x_yes_no_flag
+sro_attributes,oeman,OE Manufacturer,x_yes_no_flag
+sro_attributes,oem,OEM,x_yes_no_flag
+sro_attributes,odm,Outside Diameter,x_yes_no_flag
+sro_attributes,odmmm,Outside Diameter (mm),x_yes_no_flag
+sro_attributes,oasslen,Overall Assembly Length,x_yes_no_flag
+sro_attributes,ptype,Part Type,x_yes_no_flag
+sro_attributes,position,Position,x_yes_no_flag
+sro_attributes,ratio,Ratio,x_yes_no_flag
+sro_attributes,roddm,Rod Thread Diameter,x_yes_no_flag
+sro_attributes,sensor,Sensor Type,x_yes_no_flag
+sro_attributes,series,Series,x_yes_no_flag
+sro_attributes,singletr,Single Tires,x_yes_no_flag
+sro_attributes,ssc,Slack Spline Count,x_yes_no_flag
+sro_attributes,stapdm,Small Taper Diameter,x_yes_no_flag
+sro_attributes,spintype,Spindle Type,x_yes_no_flag
+sro_attributes,spldm,Spline Diameter,x_yes_no_flag
+sro_attributes,splen,Spline Length,x_yes_no_flag
+sro_attributes,sctre,Stud Center to Rod End,x_yes_no_flag
+sro_attributes,sthrddm,Stud Thread Diameter,x_yes_no_flag
+sro_attributes,style,Style ,x_yes_no_flag
+sro_attributes,sysconfg,System Configuration,x_yes_no_flag
+sro_attributes,taplen,Taper Length,x_yes_no_flag
+sro_attributes,teeth,Teeth,x_yes_no_flag
+sro_attributes,sc4thick,Thickness,x_yes_no_flag
+sro_attributes,toolt,Tool Type,x_yes_no_flag
+sro_attributes,torque,Torque,x_yes_no_flag
+sro_attributes,tubtype,Tube Type,x_yes_no_flag
+sro_attributes,tubodm,Tubing Outside Diameter,x_yes_no_flag
+sro_attributes,type,Type,x_yes_no_flag
+sro_attributes,type1,Type 1,x_yes_no_flag
+sro_attributes,trotor,Type of Rotor,x_yes_no_flag
+sro_attributes,ewalltk,Wall Thickness,x_yes_no_flag
+sro_attributes,ykdim,Yoke Dimension,x_yes_no_flag
+sro_attributes,ydimae,Yoke Dimension Across Ears,x_yes_no_flag
+sro_groups,sro_gname,SRO Group,x_sro_group_name
+sro_groups,maingrp,Main Group,x_yes_no_flag
+sro_groups,srocat,SRO Category,sro_attributes
+sf_approved_quotes,qapp,Approvals,x_approval_status
+s_tcc_qualifiers,attribute,Attribute,x_tcc_attributes
+quote_rec,rec,Recommendation,x_recc
+quote_rec,userrec,User Recommendation,x_recc
+quote_rec,regcode,Region Code,p_pricing_region
+part_relationship,reltype,Part Relationship Type,x_pr_rel
+part_relationship,prcregcd,Region Code,p_pricing_region
+part_relationship,rel,Relationship,x_pr_type
+part_relationship,spartgrp,Secondary Part Group,x_part_group
+pricing_calc,prodcd1,Product Code - 1 Digit,x_product_code_1_digit
+pricing_calc,prodcd3,Product Code - 3 Digit,x_product_code_3_digit
+quotefil_additions,qfds,Region Code,p_pricing_region
+quotefil_additions,valid,Validation,x_validation
+quotefil_additions,paapp,Pricing Analyst Approval,x_approval_status
+quotefil_additions,pdl1vapp,Product Director LV1 Approval,x_approval_status
+quotefil_additions,pdl2vapp,Product Director LV2 Approval,x_approval_status
+quotefil_additions,pmleadap,Product Manager Leader Approval,x_approval_status
+quotefil_additions,pmapp,Pricing Manager Approval,x_approval_status
+quotefil_additions,pmaapp,Prcng Manager Approval,x_approval_status
+quotefil_additions,edapp,Executive Director Approval,x_approval_status
+quotefil_additions,paname,Pricing Action,p_pricing_action_detail
+quotefil_additions,pdapp,Pricing Director Approval,x_approval_status
+part_grp,exclude,Exclude From Group Relationships,x_yes_no_flag
+p_lifecycle_stage,name,Lifecycle Stage,x_lifecycle_stage
+pahist,paction,Pricing Action,p_pricing_action_detail
+pahist,rgcd,Region,p_pricing_region
+pahist,segtyp,Segment Type,x_segment_type
+pahist,approval,Approval Role,x_role
+pahist,rpf,Regional Pricing Flag,x_yes_no_flag
+pahist,pcode3,Product Code - 3 Digit,x_product_code_3_digit
+pahist,pcode1,Product Code - 1 Digit,x_product_code_1_digit
+pahist,pmeth,Pricing Method,x_pricing_method
+p_service_exchange,name,Service Exchange,x_service_exchange
+org_chart,pa,Pricing Analyst,x_pricing_analyst
+new_parts_notification_detail,cstatus,Current Status,x_status
+new_parts_notification_detail,priority,Priority,x_priority
+ndisc_additions,paname,Pricing Action Name,p_pricing_action_detail
+ndisc_additions,approv,Pricing Manager Approval,x_approval_status
+ndisc_additions,reg,Region Code,p_pricing_region
+ndisc_additions,valid,Validation,x_validation
+trkcodf_additions,tapp,Approval Yes/No,x_approval_status
+trkcodf_additions,pa,Pricing Action,p_pricing_action_detail
+trkcodf_additions,tfdscd,Region Code,p_pricing_region
+trkcodf_additions,valid,Validation,x_validation
+lpexcept,brnd,Brand,x_brand
+lpexcept,lpexcept,List Price Exception,x_yes_no_flag
+lpexcept,pcode3,Product Code - 3 Digit,x_product_code_3_digit
+franchise,paexcept,Pricing Action Exception,x_yes_no_flag
+p_last_production_date,ecode,E-Coded Part,x_yes_no_flag
+p_doa_seg,seg,Segment Type,x_segment_type
+p_doa_seg,pi,Pricing Impact,x_pi
+p_doa_seg,role,Role,x_role
+p_doa_seg,brnd,Brand,x_brand
+p_doa_seg,reg,Region Code,p_pricing_region
+future_core_planning,regcd,Region Code ,p_pricing_region
+disccode_additions,paname,Pricing Action Name,p_pricing_action_detail
+disccode_additions,approv,Pricing Manager Approval,x_approval_status
+disccode_additions,reg,Region Code,p_pricing_region
+disccode_additions,valid,Validation,x_validation
+customer_signup_additions,paname,Pricing Action Name,p_pricing_action_detail
+customer_signup_additions,approv,Pricing Manager Approval,x_approval_status
+customer_signup_additions,fds,Region Code,p_pricing_region
+customer_signup_additions,valid,Validation,x_validation
+customer_part_numbers,tfcusxrf,Customer Name,x_customer_xref
+cpf_gen,copydsm,Copy Dsm,x_yes_no_flag
+cpf_gen,preq,Price File Required,x_yes_no_flag
+cpf_gen,paction,Pricing Action,p_pricing_action_detail
+cpf_gen,reg,Region,p_pricing_region
+partdisc_additons,peffdt,Pricing Action,p_pricing_action_detail
+partdisc_additons,papp,Pricing Manager Approval,x_approval_status
+partdisc_additons,pfds,Region Code,p_pricing_region
+partdisc_additons,valid,Validation,x_validation
+s_what_if,brnd_cd,Brand,x_brand
+s_what_if,dwdesc_1,DW - 1 Digit Description,x_dw_1_digit
+s_what_if,mngrpd,Channel Description - Main Group,x_customer_main_group
+s_what_if,prodman,Product Manager,org_chart
+trkcodmm_additions,mmapp,Approval Yes/No,x_approval_status
+trkcodmm_additions,mmeffdt,Pricing Action,p_pricing_action_detail
+trkcodmm_additions,mfdscd,Region Code,p_pricing_region
+trkcodmm_additions,valid,Validation,x_validation
+delegation_of_authority,doatype,DOA Type,x_pi
+delegation_of_authority,reg,Region Code,p_pricing_region
+delegation_of_authority,segtype,Segment Type,x_segment_type
+delegation_of_authority,role,Role,x_role
+delegation_of_authority,ptype,Pricing Action Type,x_pricing_action_type
+padminowner,dig3,AS400 3 Digit,x_product_code_3_digit
+padminowner,lpcalc,List Price Calculator,x_calc_name
+padminowner,method,Pricing Method,x_pricing_method
+padminowner,pmcode,Product Manager Code,org_chart
+padminowner,dig1,As400 1 Digit,x_product_code_1_digit
+padminowner,pa,Pricing Analyst,x_pricing_analyst
+padminowner,segtype,Segment Type,x_segment_type
+padminowner,srocat,SRO Category,sro_attributes
+customer,chainc,Chain,x_chain
+customer,chnl,Channel,x_channel
+customer,grp,Group ,x_customer_group
+customer,mngrp,Main Group,x_customer_main_group
+part_regional,brnd_cd,Brand Code,x_brand
+part_regional,gbb,Good/Better/Best,x_good_better_best
+part_regional,lfcycle,Lifecycle Stage,x_lifecycle_stage
+part_regional,mfgcc,Mfg. Class Code,x_mfg_prod_code_class
+part_regional,prod_cd1,Product Code - 1 Digit,x_product_code_1_digit
+part_regional,prod_cd3,Product Code - 3 Digit,x_product_code_3_digit
+part_regional,mfgpdcd,Product Code (Mfg. Product Code),x_mfg_prod_code
+part_regional,prdmgr,Product Manager,org_chart
+part_regional,rgcd,Region Code,p_pricing_region
+part_regional,sub_brand,Sub Brand,x_sub_brand
+cust_price_file,f022,Format 022,x_yes_no_flag
+cust_price_file,f024,Format 024,x_yes_no_flag
+cust_price_file,f027,Format 027,x_yes_no_flag
+cust_price_file,f573,Format 573,x_yes_no_flag
+cust_price_file,f576,Format 576,x_yes_no_flag
+cust_price_file,f581,Format 581,x_yes_no_flag
+nprice,prcmeth,Pricing Method,x_pricing_method
+nprice,pcode3,Product Code - 3 Digit,x_product_code_3_digit
+nprice,brand,Brand,x_brand
+p_promos_link,lregcd,Leader Region Code,p_pricing_region
+p_promos_link,fregcd,Follower Region Code,p_pricing_region
+lphist,regcd,Region Code,p_pricing_region
+lphist,paction,Pricing Action,p_pricing_action_detail
+pricing_changes_planning,prodcd3,Product Code - 3 Digit,x_product_code_3_digit
+pricing_changes_planning,prodcd1,Product Code - 1 Digit,x_product_code_1_digit
+pricing_changes_planning,regcd,Region Code,p_pricing_region
+pricing_changes_planning,sysflag,Review Flag - System,x_yes_no_flag
+pricing_changes_planning,userflag,Review Flag - User,x_yes_no_flag
+pricing_changes_planning,pamethod,Pricing Action,p_pricing_action_detail
+pricing_changes_planning,seg,Segment,x_segment_type
+pricing_changes_planning,regpric,Regional Pricing Flag,x_yes_no_flag
+pricing_changes_planning,curprcm,Current Pricing Method,x_pricing_method
+pricing_changes_planning,prcmeth,Future Pricing Method,x_pricing_method
+pricing_changes_planning,paowner,Pricing Action Owner,p_pricing_region
+pricing_changes_planning,paapp,Pricing Analyst Approval,x_approval_status
+pricing_changes_planning,pmapp,Product Manager Approval,x_approval_status
+pricing_changes_planning,pmlapp,Product Manager Lead Approval,x_approval_status
+pricing_changes_planning,prcmapp,Pricing Manager Approval,x_approval_status
+pricing_changes_planning,pdapp,Pricing Director Approval,x_approval_status
+pricing_changes_planning,pmdl1app,Product Manager Director LVL1 Approval,x_approval_status
+pricing_changes_planning,pmdl2app,Product Manager Director LVL2 Approval,x_approval_status
+pricing_changes_planning,edapp,Executive Director Approval,x_approval_status
+pricing_changes_planning,ninter,New Internal or External,x_interplant
+pricing_changes_planning,ndomes,New International or Domestic,x_yes_no_flag
+pricing_changes_planning,nkit,New KIT Flag,x_yes_no_flag
+currency,name,Base Region,p_pricing_region
+currency,prod1,Product Code-1 Digit,x_product_code_1_digit
+currency,rcode,Region Code,p_pricing_region
+tc_cat,pvtlbl,Private Label Track Code,x_yes_no_flag
+tc_cat,mixtk,Mix and Match Track Code,x_yes_no_flag
+tc_cat,qty,Quantity Based Track Code,x_yes_no_flag
+p_sub_brand,name,Name,x_sub_brand
+p_good_better_best,name,GBB,x_good_better_best
+p_leader_or_follower,name,Leader or Follower,x_leader_follower

@@ -1,0 +1,39 @@
+-- View: public.mv_final_customer_impact_report
+
+-- DROP MATERIALIZED VIEW IF EXISTS public.mv_final_customer_impact_report;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS public.mv_final_customer_impact_report
+TABLESPACE pg_default
+AS
+ SELECT cirf.csolcd AS cirf_csolcd,
+    circ.csolcd AS circ_csolcd,
+    cirf.cpartno AS cirf_cpartno,
+    circ.cpartno AS circ_cpartno,
+    circ.rgcd AS circ_rgcd,
+    circ.brnd_cd_code AS circ_brnd_cd_code,
+    circ.dwatt_1_name AS circ_dwatt_1_name,
+    circ."Current List Price" AS circ_current_list_price,
+    circ."Future List Price" AS circ_future_list_price,
+    circ.ppart AS circ_ppart,
+    circ.prmcod AS circ_prmcod,
+    circ.pprc AS circ_pprc,
+    circ.pdes AS circ_pdes,
+    cirf.rgcd AS cirf_rgcd,
+    cirf.brnd_cd_code AS cirf_brnd_cd_code,
+    cirf.dwatt_1_name AS cirf_dwatt_1_name,
+    cirf."Current List Price" AS cirf_current_list_price,
+    cirf."Future List Price" AS cirf_future_list_price,
+    cirf.ppart AS cirf_ppart,
+    cirf.prmcod AS cirf_prmcod,
+    cirf.pprc AS cirf_pprc,
+    cirf.pdes AS cirf_pdes,
+    cirf."Future Net Price",
+    circ."Current Net Price",
+    cirf.method AS cirf_method,
+    circ.method AS circ_method
+   FROM view_cust_impact_result_current circ
+     LEFT JOIN view_cust_impact_result_future cirf ON cirf.csolcd::text = circ.csolcd::text
+WITH DATA;
+
+ALTER TABLE IF EXISTS public.mv_final_customer_impact_report
+    OWNER TO postgres;

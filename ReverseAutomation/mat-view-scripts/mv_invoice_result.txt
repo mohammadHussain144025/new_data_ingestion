@@ -1,0 +1,24 @@
+-- View: public.mv_invoice_result
+
+-- DROP MATERIALIZED VIEW IF EXISTS public.mv_invoice_result;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS public.mv_invoice_result
+TABLESPACE pg_default
+AS
+ SELECT DISTINCT co.csolcd,
+    co.cpartno,
+    co.rgcd,
+    pr.brnd_cd_code,
+    p.dwatt_1_name,
+    pr.lprc AS "Current List Price",
+    pcp.futlist AS "Future List Price",
+    pcp.effdt
+   FROM coninv co
+     JOIN view_part_regional pr ON co.cpartno::text = pr.part_num::text AND co.rgcd::text = pr.rgcd_code::text
+     JOIN view_part p ON co.cpartno::text = p.part_num::text
+     LEFT JOIN view_pricing_changes_planning pcp ON pcp.regcd_code::text = co.rgcd::text AND pcp.part::text = co.cpartno::text
+  WHERE co.cinvdt > (CURRENT_DATE - '1 year'::interval)
+WITH DATA;
+
+ALTER TABLE IF EXISTS public.mv_invoice_result
+    OWNER TO postgres;

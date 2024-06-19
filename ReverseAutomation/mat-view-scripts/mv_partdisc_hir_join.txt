@@ -1,0 +1,150 @@
+-- View: public.mv_partdisc_hir_join
+
+-- DROP MATERIALIZED VIEW IF EXISTS public.mv_partdisc_hir_join;
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS public.mv_partdisc_hir_join
+TABLESPACE pg_default
+AS
+ WITH cte AS (
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON pr.prod_cd5::text ~~ '%A1K%'::text AND pd.ppcode::text = 'A1K'::text
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON SUBSTRING(pr.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd.ppcode FROM 1 FOR 1) AND SUBSTRING(pr.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd.ppcode FROM 4 FOR 1)
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text))
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON "left"(pr.prod_cd5::text, 5) = pd.ppcode::text
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON SUBSTRING(pr_1.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd_1.ppcode FROM 1 FOR 1) AND SUBSTRING(pr_1.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd_1.ppcode FROM 4 FOR 1)))
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON "left"(pr.prod_cd5::text, 3) = pd.ppcode::text
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON SUBSTRING(pr_1.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd_1.ppcode FROM 1 FOR 1) AND SUBSTRING(pr_1.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd_1.ppcode FROM 4 FOR 1))) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON "left"(pr_1.prod_cd5::text, 5) = pd_1.ppcode::text))
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON "left"(pr.prod_cd5::text, 1) = pd.ppcode::text
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON SUBSTRING(pr_1.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd_1.ppcode FROM 1 FOR 1) AND SUBSTRING(pr_1.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd_1.ppcode FROM 4 FOR 1))) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON "left"(pr_1.prod_cd5::text, 5) = pd_1.ppcode::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON "left"(pr_1.prod_cd5::text, 3) = pd_1.ppcode::text))
+        )
+ SELECT cte.psoldt,
+    cte.pstrdt,
+    cte.penddt,
+    cte.part_num,
+    'Product'::text AS method,
+    0 AS pprc,
+    d.dperct AS "discount percent"
+   FROM cte
+     JOIN disccode d ON cte.pdisc = d.code::integer
+WITH DATA;
+
+ALTER TABLE IF EXISTS public.mv_partdisc_hir_join
+    OWNER TO postgres;

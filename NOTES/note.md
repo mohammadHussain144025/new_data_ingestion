@@ -94,3 +94,9 @@ netstat -ano|findstr :8080
      TCP    [::]:8080              [::]:0                 LISTENING       3940
 then to kill the process
 taskkill /f /pid 3940 
+
+>> to find non-utf8 charachers in a file
+grep -axv '.*' technical_part_details.csv
+
+>> to find how many files are there in a directory
+find . -type f | wc -l
