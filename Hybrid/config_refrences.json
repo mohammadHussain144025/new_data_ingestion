@@ -1,0 +1,43 @@
+//customer config
+
+{
+    "input_csv": "OCACUST_202406190244_4654.csv",
+    "output_csv": "mapped_customer.csv",
+    "columns": [
+        {
+            "column_name": "chnl",
+            "referred_table": "x_channel"
+        },
+        {
+            "column_name": "chainc",
+            "referred_table": "x_chain"
+        },
+        {
+            "column_name": "sldto",
+            "referred_table": "x_sold_to"
+        },
+        {
+            "column_name": "shpto",
+            "referred_table": "x_ship_to"
+        }
+        
+    ]
+  }
+
+  //supplier config
+
+  {
+    "input_csv": "OCACUST_202406190244_4654.csv",
+    "output_csv": "mapped_customer.csv",
+    "columns": [
+        {
+            "column_name": "inter",
+            "referred_table": "x_interplant"
+        },
+        {
+            "column_name": "dom",
+            "referred_table": "x_yes_no_flag"
+        }
+        
+    ]
+  }

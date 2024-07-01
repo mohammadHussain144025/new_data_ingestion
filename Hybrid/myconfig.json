@@ -1,0 +1,37 @@
+{
+  "input_csv": "part_regional_cleaned.csv",
+  "output_csv": "part_regional.csv",
+  "columns": [
+      {
+          "column_name": "brnd_cd",
+          "referred_table": "x_brand"
+      },
+      {
+        "column_name": "mfgpdcd",
+        "referred_table": "x_mfg_prod_code"
+      },
+      {
+        "column_name": "mfgcc",
+        "referred_table": "x_mfg_prod_code_class"
+      },
+      {
+        "column_name": "prdmgr",
+        "referred_table": "org_chart"
+      },
+      {
+        "column_name": "prod_cd1",
+        "referred_table": "x_product_code_1_digit"
+      },
+      {
+        "column_name": "prod_cd3",
+        "referred_table": "x_product_code_3_digit"
+      },
+      {
+        "column_name": "rgcd",
+        "referred_table": "p_pricing_region"
+      }
+      
+      
+      ],
+        "date_columns": ["cr_dt","sup_dt","lppdt","postdt","poendt"]
+}
