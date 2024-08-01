@@ -1,0 +1,55 @@
+-- View: public.view_quotefil
+
+-- DROP VIEW public.view_quotefil;
+
+CREATE OR REPLACE VIEW public.view_quotefil AS
+SELECT name,
+    qsoldt,
+    code,
+    qpartno,
+    qcustno,
+    quote,
+    qfds,
+    qfrom,
+    qto,
+    qmail,
+    qrefer,
+    qattn,
+    qmin1,
+    qmin2,
+    qmin3,
+    qmin4,
+    qmin5,
+    qmax1,
+    qmax2,
+    qmax3,
+    qmax4,
+    qmax5,
+    qprc1,
+    qprc2,
+    qprc3,
+    qprc4,
+    qprc5,
+    qdsc1,
+    qdsc2,
+    qdsc3,
+    qdsc4,
+    qdsc5,
+    qlist,
+    qspecl,
+    qprint,
+    qcmt1,
+    qcmt2,
+    qcomqty,
+    id,
+    updated_by,
+    updated_date,
+    validationstatus,
+    is_valid,
+    created_date,
+    created_by,
+    comment
+   FROM quotefil quotefil;;
+
+ALTER TABLE public.view_quotefil
+    OWNER TO postgres;

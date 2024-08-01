@@ -1,0 +1,1264 @@
+schemaname,viewname,definition
+public,mv_prm_cntrct_future," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pdsc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Contractual'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstop > (CURRENT_DATE - '1 year'::interval) AND eprm.prmend > (CURRENT_DATE - '1 year'::interval) AND tc.trkcd_cat::text = 'Contractual'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_prm_prmnt_future," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Permanent'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstop > (CURRENT_DATE - '1 year'::interval) AND eprm.prmend > (CURRENT_DATE - '1 year'::interval) AND tc.trkcd_cat::text = 'Permanent'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_prm_cntrct_current," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Contractual'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstart < CURRENT_DATE AND p.pstop > CURRENT_DATE AND eprm.prmbeg < CURRENT_DATE AND eprm.prmend > CURRENT_DATE AND tc.trkcd_cat::text = 'Contractual'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_final_customer_impact_report," SELECT cirf.csolcd AS cirf_csolcd,
+    circ.csolcd AS circ_csolcd,
+    cirf.cpartno AS cirf_cpartno,
+    circ.cpartno AS circ_cpartno,
+    circ.rgcd AS circ_rgcd,
+    circ.brnd_cd_code AS circ_brnd_cd_code,
+    circ.dwatt_1_name AS circ_dwatt_1_name,
+    circ.""Current List Price"" AS circ_current_list_price,
+    circ.""Future List Price"" AS circ_future_list_price,
+    circ.ppart AS circ_ppart,
+    circ.prmcod AS circ_prmcod,
+    circ.pprc AS circ_pprc,
+    circ.pdes AS circ_pdes,
+    cirf.rgcd AS cirf_rgcd,
+    cirf.brnd_cd_code AS cirf_brnd_cd_code,
+    cirf.dwatt_1_name AS cirf_dwatt_1_name,
+    cirf.""Current List Price"" AS cirf_current_list_price,
+    cirf.""Future List Price"" AS cirf_future_list_price,
+    cirf.ppart AS cirf_ppart,
+    cirf.prmcod AS cirf_prmcod,
+    cirf.pprc AS cirf_pprc,
+    cirf.pdes AS cirf_pdes,
+    cirf.""Future Net Price"",
+    circ.""Current Net Price"",
+    cirf.method AS cirf_method,
+    circ.method AS circ_method
+   FROM view_cust_impact_result_current circ
+     LEFT JOIN view_cust_impact_result_future cirf ON cirf.csolcd::text = circ.csolcd::text;"
+public,mv_prm_tmpry_current," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Temporary'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstart < CURRENT_DATE AND p.pstop > CURRENT_DATE AND eprm.prmbeg < CURRENT_DATE AND eprm.prmend > CURRENT_DATE AND tc.trkcd_cat::text = 'Temporary'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_prm_house_current," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'House'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstart < CURRENT_DATE AND p.pstop > CURRENT_DATE AND eprm.prmbeg < CURRENT_DATE AND eprm.prmend > CURRENT_DATE AND tc.trkcd_cat::text = 'House'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_prm_tmpry_future," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Temporary'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstop > (CURRENT_DATE - '1 year'::interval) AND eprm.prmend > (CURRENT_DATE - '1 year'::interval) AND tc.trkcd_cat::text = 'Temporary'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_prm_prmnt_current," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'Permanent'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstart < CURRENT_DATE AND p.pstop > CURRENT_DATE AND eprm.prmbeg < CURRENT_DATE AND eprm.prmend > CURRENT_DATE AND tc.trkcd_cat::text = 'Permanent'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_prm_house_future," SELECT p.ppart,
+    eprm.prmcod,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pprc2
+            WHEN eprm.prmlev = 3 THEN p.pprc3
+            WHEN eprm.prmlev = 4 THEN p.pprc4
+            WHEN eprm.prmlev = 5 THEN p.pprc5
+            WHEN eprm.prmlev = 6 THEN p.pprc6
+            WHEN eprm.prmlev = 7 THEN p.pprc7
+            ELSE NULL::numeric
+        END AS pprc,
+        CASE
+            WHEN eprm.prmlev = 1 OR p.trkqty::text = 'Y'::text THEN p.pprc1
+            WHEN eprm.prmlev = 2 THEN p.pdsc2
+            WHEN eprm.prmlev = 3 THEN p.pdsc3
+            WHEN eprm.prmlev = 4 THEN p.pdsc4
+            WHEN eprm.prmlev = 5 THEN p.pdsc5
+            WHEN eprm.prmlev = 6 THEN p.pdsc6
+            WHEN eprm.prmlev = 7 THEN p.pdsc7
+            ELSE NULL::numeric
+        END AS pdes,
+    'House'::text AS method,
+    p.pstart AS start,
+    p.pstop AS ""end""
+   FROM promos p
+     JOIN tc_cat tc ON p.ptrack::text = tc.trkcd::text
+     JOIN prmoprce eprm ON p.ptrack::text = eprm.prmtrk::text
+  WHERE p.pstop > (CURRENT_DATE - '1 year'::interval) AND eprm.prmend > (CURRENT_DATE - '1 year'::interval) AND tc.trkcd_cat::text = 'House'::text AND eprm.prmlev IS NOT NULL;"
+public,mv_sro_compliance," WITH cte1 AS (
+         SELECT sro_attributes.code,
+            TRIM(TRAILING ', '::text FROM concat(
+                CASE
+                    WHEN sro_attributes.app = 1 THEN 'app, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.axleapp = 1 THEN 'axleapp, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.axlemod = 1 THEN 'axlemod, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.axleser = 1 THEN 'axleser, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bpw = 1 THEN 'bpw, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.beardm = 1 THEN 'beardm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bodydm = 1 THEN 'bodydm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bcd = 1 THEN 'bcd, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bhd = 1 THEN 'bhd, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bore = 1 THEN 'bore, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.brakesz = 1 THEN 'brakesz, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.brtype = 1 THEN 'brtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.brand = 1 THEN 'brand, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bushtype = 1 THEN 'bushtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.cssc = 1 THEN 'cssc, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ctype = 1 THEN 'ctype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.cte = 1 THEN 'cte, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ctelen = 1 THEN 'ctelen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.chmbrty = 1 THEN 'chmbrty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.class = 1 THEN 'class, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.clutch = 1 THEN 'clutch, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.collst = 1 THEN 'collst, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.colllen = 1 THEN 'colllen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.compty = 1 THEN 'compty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.conntype = 1 THEN 'conntype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.convst = 1 THEN 'convst, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.crosslen = 1 THEN 'crosslen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.efflen = 1 THEN 'efflen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.exlen = 1 THEN 'exlen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.flngdm = 1 THEN 'flngdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.fmsi = 1 THEN 'fmsi, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.frictmix = 1 THEN 'frictmix, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.gawr = 1 THEN 'gawr, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.genafter = 1 THEN 'genafter, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.grade = 1 THEN 'grade, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.headsty = 1 THEN 'headsty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.headty = 1 THEN 'headty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.hubsty = 1 THEN 'hubsty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.hubtype = 1 THEN 'hubtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.hubcaps = 1 THEN 'hubcaps, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.indnum = 1 THEN 'indnum, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.isdm = 1 THEN 'isdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.indm = 1 THEN 'indm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.kpdm = 1 THEN 'kpdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.kplen = 1 THEN 'kplen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.kptype = 1 THEN 'kptype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ltapdm = 1 THEN 'ltapdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.lorr = 1 THEN 'lorr, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.len = 1 THEN 'len, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.lrank = 1 THEN 'lrank, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.loorunlo = 1 THEN 'loorunlo, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.model = 1 THEN 'model, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.norrem = 1 THEN 'norrem, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.noaxles = 1 THEN 'noaxles, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.nospline = 1 THEN 'nospline, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.oeman = 1 THEN 'oeman, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.oem = 1 THEN 'oem, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.odm = 1 THEN 'odm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.odmmm = 1 THEN 'odmmm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.oasslen = 1 THEN 'oasslen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ptype = 1 THEN 'ptype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.""position"" = 1 THEN 'position, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ratio = 1 THEN 'ratio, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.roddm = 1 THEN 'roddm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sensor = 1 THEN 'sensor, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.series = 1 THEN 'series, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.singletr = 1 THEN 'singletr, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ssc = 1 THEN 'ssc, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.stapdm = 1 THEN 'stapdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.spintype = 1 THEN 'spintype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.spldm = 1 THEN 'spldm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.splen = 1 THEN 'splen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sctre = 1 THEN 'sctre, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sthrddm = 1 THEN 'sthrddm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.style = 1 THEN 'style, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sysconfg = 1 THEN 'sysconfg, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.taplen = 1 THEN 'taplen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.teeth = 1 THEN 'teeth, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sc4thick = 1 THEN 'sc4thick, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.toolt = 1 THEN 'toolt, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.torque = 1 THEN 'torque, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.tubtype = 1 THEN 'tubtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.tubodm = 1 THEN 'tubodm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.type = 1 THEN 'type, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.type1 = 1 THEN 'type1, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.trotor = 1 THEN 'trotor, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ewalltk = 1 THEN 'ewalltk, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ykdim = 1 THEN 'ykdim, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ydimae = 1 THEN 'ydimae, '::text
+                    ELSE ''::text
+                END)) AS columns_with_value_yes,
+            TRIM(TRAILING ', '::text FROM concat(
+                CASE
+                    WHEN sro_attributes.app = 2 THEN 'app, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.axleapp = 2 THEN 'axleapp, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.axlemod = 2 THEN 'axlemod, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.axleser = 2 THEN 'axleser, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bpw = 2 THEN 'bpw, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.beardm = 2 THEN 'beardm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bodydm = 2 THEN 'bodydm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bcd = 2 THEN 'bcd, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bhd = 2 THEN 'bhd, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bore = 2 THEN 'bore, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.brakesz = 2 THEN 'brakesz, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.brtype = 2 THEN 'brtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.brand = 2 THEN 'brand, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.bushtype = 2 THEN 'bushtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.cssc = 2 THEN 'cssc, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ctype = 2 THEN 'ctype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.cte = 2 THEN 'cte, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ctelen = 2 THEN 'ctelen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.chmbrty = 2 THEN 'chmbrty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.class = 2 THEN 'class, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.clutch = 2 THEN 'clutch, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.collst = 2 THEN 'collst, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.colllen = 2 THEN 'colllen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.compty = 2 THEN 'compty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.conntype = 2 THEN 'conntype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.convst = 2 THEN 'convst, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.crosslen = 2 THEN 'crosslen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.efflen = 2 THEN 'efflen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.exlen = 2 THEN 'exlen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.flngdm = 2 THEN 'flngdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.fmsi = 2 THEN 'fmsi, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.frictmix = 2 THEN 'frictmix, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.gawr = 2 THEN 'gawr, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.genafter = 2 THEN 'genafter, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.grade = 2 THEN 'grade, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.headsty = 2 THEN 'headsty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.headty = 2 THEN 'headty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.hubsty = 2 THEN 'hubsty, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.hubtype = 2 THEN 'hubtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.hubcaps = 2 THEN 'hubcaps, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.indnum = 2 THEN 'indnum, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.isdm = 2 THEN 'isdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.indm = 2 THEN 'indm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.kpdm = 2 THEN 'kpdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.kplen = 2 THEN 'kplen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.kptype = 2 THEN 'kptype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ltapdm = 2 THEN 'ltapdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.lorr = 2 THEN 'lorr, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.len = 2 THEN 'len, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.lrank = 2 THEN 'lrank, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.loorunlo = 2 THEN 'loorunlo, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.model = 2 THEN 'model, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.norrem = 2 THEN 'norrem, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.noaxles = 2 THEN 'noaxles, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.nospline = 2 THEN 'nospline, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.oeman = 2 THEN 'oeman, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.oem = 2 THEN 'oem, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.odm = 2 THEN 'odm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.odmmm = 2 THEN 'odmmm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.oasslen = 2 THEN 'oasslen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ptype = 2 THEN 'ptype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.""position"" = 2 THEN 'position, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ratio = 2 THEN 'ratio, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.roddm = 2 THEN 'roddm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sensor = 2 THEN 'sensor, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.series = 2 THEN 'series, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.singletr = 2 THEN 'singletr, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ssc = 2 THEN 'ssc, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.stapdm = 2 THEN 'stapdm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.spintype = 2 THEN 'spintype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.spldm = 2 THEN 'spldm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.splen = 2 THEN 'splen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sctre = 2 THEN 'sctre, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sthrddm = 2 THEN 'sthrddm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.style = 2 THEN 'style, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sysconfg = 2 THEN 'sysconfg, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.taplen = 2 THEN 'taplen, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.teeth = 2 THEN 'teeth, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.sc4thick = 2 THEN 'sc4thick, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.toolt = 2 THEN 'toolt, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.torque = 2 THEN 'torque, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.tubtype = 2 THEN 'tubtype, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.tubodm = 2 THEN 'tubodm, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.type = 2 THEN 'type, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.type1 = 2 THEN 'type1, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.trotor = 2 THEN 'trotor, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ewalltk = 2 THEN 'ewalltk, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ykdim = 2 THEN 'ykdim, '::text
+                    ELSE ''::text
+                END,
+                CASE
+                    WHEN sro_attributes.ydimae = 2 THEN 'ydimae, '::text
+                    ELSE ''::text
+                END)) AS columns_with_value_no
+           FROM sro_attributes
+        ), cte2 AS (
+         SELECT pao.method_code,
+            pao.dig3_name,
+            pao.dig3,
+            pao.srocat_code,
+            cte1.columns_with_value_no,
+            cte1.columns_with_value_yes
+           FROM view_padminowner pao
+             JOIN cte1 ON cte1.code::text = pao.srocat_code::text
+          WHERE pao.method_code::text = 'SRO'::text
+        ), cte3 AS (
+         SELECT pr.part_num,
+            pr.prod_cd1_name,
+            pr.prod_cd3_name,
+            cte2.dig3_name,
+            cte2.method_code,
+            cte2.srocat_code,
+            cte2.columns_with_value_yes,
+            ( SELECT TRIM(TRAILING ', '::text FROM string_agg(unnamed_subquery.column_name, ', '::text)) AS rtrim
+                   FROM ( SELECT column_name.column_name
+                           FROM unnest(string_to_array(cte2.columns_with_value_yes, ', '::text)) column_name(column_name)
+                             LEFT JOIN technical_part_details tpd ON pr.part_num::text = tpd.part_num::text
+                          WHERE NOT (column_name.column_name IN ( SELECT column_name_1.column_name
+                                   FROM unnest(string_to_array(cte2.columns_with_value_yes, ', '::text)) column_name_1(column_name)
+                                  WHERE
+CASE
+ WHEN column_name_1.column_name = 'app'::text THEN tpd.app IS NOT NULL
+ WHEN column_name_1.column_name = 'axleapp'::text THEN tpd.axleapp IS NOT NULL
+ WHEN column_name_1.column_name = 'axlemod'::text THEN tpd.axlemod IS NOT NULL
+ WHEN column_name_1.column_name = 'axleser'::text THEN tpd.axleser IS NOT NULL
+ WHEN column_name_1.column_name = 'bpw'::text THEN tpd.bpw IS NOT NULL
+ WHEN column_name_1.column_name = 'beardm'::text THEN tpd.beardm IS NOT NULL
+ WHEN column_name_1.column_name = 'bodydm'::text THEN tpd.bodydm IS NOT NULL
+ WHEN column_name_1.column_name = 'bcd'::text THEN tpd.bcd IS NOT NULL
+ WHEN column_name_1.column_name = 'bhd'::text THEN tpd.bhd IS NOT NULL
+ WHEN column_name_1.column_name = 'bore'::text THEN tpd.bore IS NOT NULL
+ WHEN column_name_1.column_name = 'brakesz'::text THEN tpd.brakesz IS NOT NULL
+ WHEN column_name_1.column_name = 'brtype'::text THEN tpd.brtype IS NOT NULL
+ WHEN column_name_1.column_name = 'brand'::text THEN tpd.brand IS NOT NULL
+ WHEN column_name_1.column_name = 'bushtype'::text THEN tpd.bushtype IS NOT NULL
+ WHEN column_name_1.column_name = 'cssc'::text THEN tpd.cssc IS NOT NULL
+ WHEN column_name_1.column_name = 'ctype'::text THEN tpd.ctype IS NOT NULL
+ WHEN column_name_1.column_name = 'cte'::text THEN tpd.cte IS NOT NULL
+ WHEN column_name_1.column_name = 'ctelen'::text THEN tpd.ctelen IS NOT NULL
+ WHEN column_name_1.column_name = 'chmbrty'::text THEN tpd.chmbrty IS NOT NULL
+ WHEN column_name_1.column_name = 'class'::text THEN tpd.class IS NOT NULL
+ WHEN column_name_1.column_name = 'clutch'::text THEN tpd.clutch IS NOT NULL
+ WHEN column_name_1.column_name = 'collst'::text THEN tpd.collst IS NOT NULL
+ WHEN column_name_1.column_name = 'colllen'::text THEN tpd.colllen IS NOT NULL
+ WHEN column_name_1.column_name = 'compty'::text THEN tpd.compty IS NOT NULL
+ WHEN column_name_1.column_name = 'conntype'::text THEN tpd.conntype IS NOT NULL
+ WHEN column_name_1.column_name = 'convst'::text THEN tpd.convst IS NOT NULL
+ WHEN column_name_1.column_name = 'crosslen'::text THEN tpd.crosslen IS NOT NULL
+ WHEN column_name_1.column_name = 'efflen'::text THEN tpd.efflen IS NOT NULL
+ WHEN column_name_1.column_name = 'exlen'::text THEN tpd.exlen IS NOT NULL
+ WHEN column_name_1.column_name = 'flngdm'::text THEN tpd.flngdm IS NOT NULL
+ WHEN column_name_1.column_name = 'fmsi'::text THEN tpd.fmsi IS NOT NULL
+ WHEN column_name_1.column_name = 'frictmix'::text THEN tpd.frictmix IS NOT NULL
+ WHEN column_name_1.column_name = 'gawr'::text THEN tpd.gawr IS NOT NULL
+ WHEN column_name_1.column_name = 'genafter'::text THEN tpd.genafter IS NOT NULL
+ WHEN column_name_1.column_name = 'grade'::text THEN tpd.grade IS NOT NULL
+ WHEN column_name_1.column_name = 'headsty'::text THEN tpd.headsty IS NOT NULL
+ WHEN column_name_1.column_name = 'headty'::text THEN tpd.headty IS NOT NULL
+ WHEN column_name_1.column_name = 'hubsty'::text THEN tpd.hubsty IS NOT NULL
+ WHEN column_name_1.column_name = 'hubtype'::text THEN tpd.hubtype IS NOT NULL
+ WHEN column_name_1.column_name = 'hubcaps'::text THEN tpd.hubcaps IS NOT NULL
+ WHEN column_name_1.column_name = 'indnum'::text THEN tpd.indnum IS NOT NULL
+ WHEN column_name_1.column_name = 'isdm'::text THEN tpd.isdm IS NOT NULL
+ WHEN column_name_1.column_name = 'indm'::text THEN tpd.indm IS NOT NULL
+ WHEN column_name_1.column_name = 'kpdm'::text THEN tpd.kpdm IS NOT NULL
+ WHEN column_name_1.column_name = 'kplen'::text THEN tpd.kplen IS NOT NULL
+ WHEN column_name_1.column_name = 'kptype'::text THEN tpd.kptype IS NOT NULL
+ WHEN column_name_1.column_name = 'ltapdm'::text THEN tpd.ltapdm IS NOT NULL
+ WHEN column_name_1.column_name = 'lorr'::text THEN tpd.lorr IS NOT NULL
+ WHEN column_name_1.column_name = 'len'::text THEN tpd.len IS NOT NULL
+ WHEN column_name_1.column_name = 'lrank'::text THEN tpd.lrank IS NOT NULL
+ WHEN column_name_1.column_name = 'loorunlo'::text THEN tpd.loorunlo IS NOT NULL
+ WHEN column_name_1.column_name = 'model'::text THEN tpd.model IS NOT NULL
+ WHEN column_name_1.column_name = 'norrem'::text THEN tpd.norrem IS NOT NULL
+ WHEN column_name_1.column_name = 'noaxles'::text THEN tpd.noaxles IS NOT NULL
+ WHEN column_name_1.column_name = 'nospline'::text THEN tpd.nospline IS NOT NULL
+ WHEN column_name_1.column_name = 'oeman'::text THEN tpd.oeman IS NOT NULL
+ WHEN column_name_1.column_name = 'oem'::text THEN tpd.oem IS NOT NULL
+ WHEN column_name_1.column_name = 'odm'::text THEN tpd.odm IS NOT NULL
+ WHEN column_name_1.column_name = 'odmmm'::text THEN tpd.odmmm IS NOT NULL
+ WHEN column_name_1.column_name = 'oasslen'::text THEN tpd.oasslen IS NOT NULL
+ WHEN column_name_1.column_name = 'ptype'::text THEN tpd.ptype IS NOT NULL
+ WHEN column_name_1.column_name = 'position'::text THEN tpd.""position"" IS NOT NULL
+ WHEN column_name_1.column_name = 'ratio'::text THEN tpd.ratio IS NOT NULL
+ WHEN column_name_1.column_name = 'roddm'::text THEN tpd.roddm IS NOT NULL
+ WHEN column_name_1.column_name = 'sensor'::text THEN tpd.sensor IS NOT NULL
+ WHEN column_name_1.column_name = 'series'::text THEN tpd.series IS NOT NULL
+ WHEN column_name_1.column_name = 'singletr'::text THEN tpd.singletr IS NOT NULL
+ WHEN column_name_1.column_name = 'ssc'::text THEN tpd.ssc IS NOT NULL
+ WHEN column_name_1.column_name = 'stapdm'::text THEN tpd.stapdm IS NOT NULL
+ WHEN column_name_1.column_name = 'spintype'::text THEN tpd.spintype IS NOT NULL
+ WHEN column_name_1.column_name = 'spldm'::text THEN tpd.spldm IS NOT NULL
+ WHEN column_name_1.column_name = 'splen'::text THEN tpd.splen IS NOT NULL
+ WHEN column_name_1.column_name = 'sctre'::text THEN tpd.sctre IS NOT NULL
+ WHEN column_name_1.column_name = 'sthrddm'::text THEN tpd.sthrddm IS NOT NULL
+ WHEN column_name_1.column_name = 'style'::text THEN tpd.style IS NOT NULL
+ WHEN column_name_1.column_name = 'sysconfg'::text THEN tpd.sysconfg IS NOT NULL
+ WHEN column_name_1.column_name = 'taplen'::text THEN tpd.taplen IS NOT NULL
+ WHEN column_name_1.column_name = 'teeth'::text THEN tpd.teeth IS NOT NULL
+ WHEN column_name_1.column_name = 'sc4thick'::text THEN tpd.sc4thick IS NOT NULL
+ WHEN column_name_1.column_name = 'toolt'::text THEN tpd.toolt IS NOT NULL
+ WHEN column_name_1.column_name = 'torque'::text THEN tpd.torque IS NOT NULL
+ WHEN column_name_1.column_name = 'tubtype'::text THEN tpd.tubtype IS NOT NULL
+ WHEN column_name_1.column_name = 'tubodm'::text THEN tpd.tubodm IS NOT NULL
+ WHEN column_name_1.column_name = 'trotor'::text THEN tpd.trotor IS NOT NULL
+ WHEN column_name_1.column_name = 'ewalltk'::text THEN tpd.ewalltk IS NOT NULL
+ WHEN column_name_1.column_name = 'ykdim'::text THEN tpd.ykdim IS NOT NULL
+ WHEN column_name_1.column_name = 'ydimae'::text THEN tpd.ydimae IS NOT NULL
+ ELSE false
+END))) unnamed_subquery) AS missing_columns,
+            pr.brnd_cd_name
+           FROM view_part_regional pr
+             JOIN cte2 ON pr.prod_cd3 = cte2.dig3
+          WHERE pr.rgcd_name::text = 'US'::text AND pr.prtstat::text = 'A'::text
+        )
+ SELECT part_num AS ""Part Number"",
+    prod_cd1_name AS ""Product Code - 1 Digit"",
+    prod_cd3_name AS ""Product Code - 3 Digit"",
+    brnd_cd_name AS ""Brand"",
+    dig3_name AS ""AS400 3 Digit"",
+    method_code AS ""Pricing Method"",
+    srocat_code AS ""SRO Category"",
+    columns_with_value_yes AS ""SRO Attributes"",
+    missing_columns AS ""Missing Attributes"",
+        CASE
+            WHEN missing_columns = ''::text THEN 'YES'::text
+            ELSE 'NO'::text
+        END AS ""SRO Compliance""
+   FROM cte3;"
+public,mv_invoice_result," SELECT DISTINCT co.csolcd,
+    co.cpartno,
+    co.rgcd,
+    pr.brnd_cd_code,
+    p.dwatt_1_name,
+    pr.lprc AS ""Current List Price"",
+    pcp.futlist AS ""Future List Price"",
+    pcp.effdt
+   FROM coninv co
+     JOIN view_part_regional pr ON co.cpartno::text = pr.part_num::text AND co.rgcd::text = pr.rgcd_code::text
+     JOIN view_part p ON co.cpartno::text = p.part_num::text
+     LEFT JOIN view_pricing_changes_planning pcp ON pcp.regcd_code::text = co.rgcd::text AND pcp.part::text = co.cpartno::text
+  WHERE co.cinvdt > (CURRENT_DATE - '1 year'::interval);"
+public,mv_partdisc_hir_join," WITH cte AS (
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON pr.prod_cd5::text ~~ '%A1K%'::text AND pd.ppcode::text = 'A1K'::text
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON SUBSTRING(pr.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd.ppcode FROM 1 FOR 1) AND SUBSTRING(pr.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd.ppcode FROM 4 FOR 1)
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text))
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON ""left""(pr.prod_cd5::text, 5) = pd.ppcode::text
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON SUBSTRING(pr_1.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd_1.ppcode FROM 1 FOR 1) AND SUBSTRING(pr_1.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd_1.ppcode FROM 4 FOR 1)))
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON ""left""(pr.prod_cd5::text, 3) = pd.ppcode::text
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON SUBSTRING(pr_1.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd_1.ppcode FROM 1 FOR 1) AND SUBSTRING(pr_1.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd_1.ppcode FROM 4 FOR 1))) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON ""left""(pr_1.prod_cd5::text, 5) = pd_1.ppcode::text))
+        UNION ALL
+         SELECT pr.prod_cd5,
+            pd.id,
+            pd.name,
+            pd.pfds,
+            pd.code,
+            pd.psoldt,
+            pd.ppcode,
+            pd.pdisc,
+            pd.pstrdt,
+            pd.penddt,
+            pd.updated_by,
+            pd.updated_date,
+            pd.validationstatus,
+            pd.is_valid,
+            pd.created_date,
+            pd.created_by,
+            pd.comment,
+            pr.part_num
+           FROM part_regional pr
+             JOIN partdisc pd ON ""left""(pr.prod_cd5::text, 1) = pd.ppcode::text
+          WHERE NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON pr_1.prod_cd5::text ~~ '%A1K%'::text AND pd_1.ppcode::text = 'A1K'::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON SUBSTRING(pr_1.prod_cd5 FROM 1 FOR 1) = SUBSTRING(pd_1.ppcode FROM 1 FOR 1) AND SUBSTRING(pr_1.prod_cd5 FROM 4 FOR 1) = SUBSTRING(pd_1.ppcode FROM 4 FOR 1))) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON ""left""(pr_1.prod_cd5::text, 5) = pd_1.ppcode::text)) AND NOT (EXISTS ( SELECT 1
+                   FROM part_regional pr_1
+                     JOIN partdisc pd_1 ON ""left""(pr_1.prod_cd5::text, 3) = pd_1.ppcode::text))
+        )
+ SELECT cte.psoldt,
+    cte.pstrdt,
+    cte.penddt,
+    cte.part_num,
+    'Product'::text AS method,
+    0 AS pprc,
+    d.dperct AS ""discount percent""
+   FROM cte
+     JOIN disccode d ON cte.pdisc = d.code::integer;"

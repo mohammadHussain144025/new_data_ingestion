@@ -1,0 +1,57 @@
+-- View: public.view_coninv
+
+-- DROP VIEW public.view_coninv;
+
+CREATE OR REPLACE VIEW public.view_coninv AS
+SELECT cpartno,
+    code,
+    name,
+    ctrck,
+    cprccd,
+    csolcd,
+    cfill1,
+    cprbtg,
+    crefcd,
+    cdirsh,
+    cshpfr,
+    cshpto,
+    cuntdn,
+    cdistg,
+    ccuspo,
+    cttm,
+    cstate,
+    crdeal,
+    creman,
+    crdlr,
+    comgen,
+    crapid,
+    cfill3,
+    cintfl,
+    cintin,
+    cfill2,
+    cordno,
+    cinvno,
+    cuntpr,
+    cqtshp,
+    csdcst,
+    cnslpr,
+    cpbamt,
+    ccordt,
+    crcore,
+    cinvdt,
+    cshpdt,
+    rgcd,
+    ctrcklvl,
+    clstprc,
+    id,
+    updated_by,
+    updated_date,
+    validationstatus,
+    is_valid,
+    created_date,
+    created_by,
+    comment
+   FROM coninv coninv;;
+
+ALTER TABLE public.view_coninv
+    OWNER TO postgres;

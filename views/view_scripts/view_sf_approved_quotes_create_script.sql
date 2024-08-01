@@ -1,0 +1,61 @@
+-- View: public.view_sf_approved_quotes
+
+-- DROP VIEW public.view_sf_approved_quotes;
+
+CREATE OR REPLACE VIEW public.view_sf_approved_quotes AS
+SELECT sf_approved_quotes.name,
+    sf_approved_quotes.code,
+    sf_approved_quotes.qpartno,
+    sf_approved_quotes.qcustno,
+    sf_approved_quotes.qfds,
+    sf_approved_quotes.qfrom,
+    sf_approved_quotes.qto,
+    sf_approved_quotes.qmail,
+    sf_approved_quotes.qrefer,
+    sf_approved_quotes.qattn,
+    sf_approved_quotes.qmin1,
+    sf_approved_quotes.qmin2,
+    sf_approved_quotes.qmin3,
+    sf_approved_quotes.qmin4,
+    sf_approved_quotes.qmin5,
+    sf_approved_quotes.qmax1,
+    sf_approved_quotes.qmax2,
+    sf_approved_quotes.qmax3,
+    sf_approved_quotes.qmax4,
+    sf_approved_quotes.qmax5,
+    sf_approved_quotes.qprc1,
+    sf_approved_quotes.qprc2,
+    sf_approved_quotes.qprc3,
+    sf_approved_quotes.qprc4,
+    sf_approved_quotes.qprc5,
+    sf_approved_quotes.qdsc1,
+    sf_approved_quotes.qdsc2,
+    sf_approved_quotes.qdsc3,
+    sf_approved_quotes.qdsc4,
+    sf_approved_quotes.qdsc5,
+    sf_approved_quotes.qlist,
+    sf_approved_quotes.qspecl,
+    sf_approved_quotes.qprint,
+    sf_approved_quotes.qcmt1,
+    sf_approved_quotes.qcmt2,
+    sf_approved_quotes.qcomqty,
+    sf_approved_quotes.qeffdt,
+    sf_approved_quotes.qprcimp,
+    sf_approved_quotes.qsoldt,
+    x_approval_status_qapp.id AS qapp,
+    x_approval_status_qapp.name AS qapp_name,
+    x_approval_status_qapp.code AS qapp_code,
+    sf_approved_quotes.quote,
+    sf_approved_quotes.id,
+    sf_approved_quotes.updated_by,
+    sf_approved_quotes.updated_date,
+    sf_approved_quotes.validationstatus,
+    sf_approved_quotes.is_valid,
+    sf_approved_quotes.created_date,
+    sf_approved_quotes.created_by,
+    sf_approved_quotes.comment
+   FROM (sf_approved_quotes sf_approved_quotes
+     LEFT JOIN x_approval_status x_approval_status_qapp ON ((sf_approved_quotes.qapp = x_approval_status_qapp.id)));;
+
+ALTER TABLE public.view_sf_approved_quotes
+    OWNER TO postgres;
